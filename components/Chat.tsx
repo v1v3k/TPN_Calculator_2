@@ -302,7 +302,8 @@ export default async function getContent(newMessages: any) {
   try {
     // const { content, sender }: Message  = req.body;
     // For this example, let's simulate an asynchronous operation
-    const apiKey = "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"; // Replace with your OpenAI API key
+    
+    const apiKey = "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"; // Replace with your OpenAI API key
     const url = "https://api.openai.com/v1/chat/completions";
 
 
@@ -329,7 +330,7 @@ export default async function getContent(newMessages: any) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+          Authorization: "Bearer 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",
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
