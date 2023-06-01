@@ -36,7 +36,8 @@ export default async function handler(
       for (let i = 0; i < req.body.messages.length; i++) {
         const message = {
           role: req.body.messages[i].role,
-          content: req.body.messages[i].content,
+          content: "Hi How are u",  
+//          content: req.body.messages[i].content,
         };
         API_messages.push(message);
       }
@@ -213,4 +214,10 @@ Based on the calculations above, the patient needs:
 - 6.6 g of dextrose/kg/day
 
 Using standard TPN formulas and your hospital's protocols for compounding TPN solutions, you can create an appropriate TPN solution for the patient. However, it is important to note that TPN is typically customized to each individual patient based on their specific medical needs and nutritional requirements. It is always important to consult with a qualified healthcare professional before starting TPN.
+*/
+
+/*
+https://stackoverflow.com/questions/68771480/nextjs-vercel-504-error-function-invocation-timeout#:~:text=This%20error%20suggests%20that%20the,a%20504%20GATEWAY%20TIMEOUT%20error.
+
+
 */
