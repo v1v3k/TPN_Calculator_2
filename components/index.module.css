@@ -1,0 +1,36 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+
+.input{
+  margin: 8px 0px 8px 0px;
+  display: flex;
+  flex-direction: column;
+  border-color: rgb(244 244 245 / var(--tw-border-opacity));
+  border-radius: 1rem;
+  margin:15px;
+}
+
+.inputLabel{
+  padding: 8px;
+}
+
+.input-container{
+  padding: 2px;
+}
+
+.subHeader{
+  margin: 16px;
+}

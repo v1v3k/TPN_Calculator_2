@@ -46,9 +46,9 @@ export function ChatLine({ role = "assistant", content }: ChatGPTMessage) {
   if (!content) {
     return null;
   }
-  debugger;
+
   const formatteMessage = convertNewLines(content);
-  debugger;
+
   return (
     <div
       className={

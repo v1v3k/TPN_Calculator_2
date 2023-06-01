@@ -10,7 +10,7 @@ function Chatbot() {
         <div className={styles.center}>
       
     
-          <Text variant="h2"> Pediatric ER Chat Bot:</Text>
+          <Text variant="h2"> TPN Calculator</Text>
         
           <div className="lg:w-2/3">
           <Chat />
