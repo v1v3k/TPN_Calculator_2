@@ -302,7 +302,7 @@ export default async function getContent(newMessages: any) {
   try {
     // const { content, sender }: Message  = req.body;
     // For this example, let's simulate an asynchronous operation
-    const apiKey = "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"; // Replace with your OpenAI API key
+    const apiKey = "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"; // Replace with your OpenAI API key
     const url = "https://api.openai.com/v1/chat/completions";
 
 
