@@ -1,7 +1,5 @@
-import { type ChatGPTMessage } from "../../components/ChatLine";
-import { OpenAIStream, OpenAIStreamPayload } from "../../utils/OpenAIStream";
+
 import { NextApiRequest, NextApiResponse } from "next";
-import { Configuration, OpenAIApi } from "openai-edge";
 
 // break the app if the API key is missing
 if (!process.env.OPENAI_API_KEY) {
