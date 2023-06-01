@@ -1,6 +1,11 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 
+// // break the app if the API key is missing
+// if (!process.env.OPENAI_API_KEY) {
+//   throw new Error("Missing Environment Variable OPENAI_API_KEY");
+// }
+
 type Message = {
   content: string;
   sender: string;
@@ -16,8 +21,8 @@ export default async function handler(
       // For this example, let's simulate an asynchronous operation
       const apiKey = "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"; // Replace with your OpenAI API key
       const url = "https://api.openai.com/v1/chat/completions";
-      
-      
+
+
       let API_messages = [
         {
           role: "system",
@@ -35,18 +40,24 @@ export default async function handler(
         };
         API_messages.push(message);
       }
-      
-      const result = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: API_messages,
-        }),
-      });
+      let result;
+      try{
+        result = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: API_messages,
+          }),
+        });
+      } catch (error:any) {
+        console.error('Error:', error.message);
+        // Handle the error or throw it to be caught elsewhere
+        throw error;
+      }
 
       console.log(result);
 
@@ -59,6 +70,7 @@ export default async function handler(
       res.statusCode = 200;
       res.json(data.choices[0].message.content);
     } catch (error) {
+    
       res.status(400).json({ error: "Bad Request" });
     }
   } else {
