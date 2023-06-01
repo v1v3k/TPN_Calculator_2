@@ -1,11 +1,6 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 
-// break the app if the API key is missing
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error("Missing Environment Variable OPENAI_API_KEY");
-}
-
 type Message = {
   content: string;
   sender: string;
@@ -53,7 +48,11 @@ export default async function handler(
         }),
       });
 
+      console.log(result);
+
       const data = await result.json();
+
+      console.log(result);
 
       console.log(data.choices[0].message.content);
 
