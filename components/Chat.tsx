@@ -226,6 +226,8 @@ export function Chat() {
   const sendMessage = async (message: string) => {
     setLoading(true);
     debugger;
+    debugger;
+    debugger;
     const newMessages = [
       { role: "user", content: message } as ChatGPTMessage,
     ];
