@@ -6,6 +6,10 @@ import styles from './index.module.css';;
 
 const COOKIE_NAME = "nextjs-example-ai-chat-gpt3";
 
+type Message = {
+  content: string;
+  sender: string;
+};
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages: ChatGPTMessage[] = [
@@ -225,56 +229,41 @@ export function Chat() {
   // send message to API /api/chat endpoint
   const sendMessage = async (message: string) => {
     setLoading(true);
-    debugger;
-    debugger;
-    debugger;
     const newMessages = [
       { role: "user", content: message } as ChatGPTMessage,
     ];
     setMessages([]);
-    const last10messages = newMessages.slice(-10); // remember last 10 messages
 
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages: last10messages,
-        user: cookie[COOKIE_NAME],
-      }),
-    });
-
-    console.log("Edge function returned.");
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    // This data is a ReadableStream
-    const data = response.body;
-    if (!data) {
-      return;
-    }
-
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-
-    let lastMessage = "";
-
-    while (!done) {
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      let chunkValue = decoder.decode(value);
-      chunkValue = chunkValue.substring(1, chunkValue.length - 1);
-      lastMessage = lastMessage + chunkValue;
+    getContent(newMessages).then(result => {
+      debugger;
+      console.log(result); // Handle the result of the asynchronous task
       setMessages([
-        { role: "assistant", content: lastMessage } as ChatGPTMessage,
+        { role: "assistant", content: result } as ChatGPTMessage,
       ]);
-
       setLoading(false);
-    }
+    });;
+
+
+
+
+    // const reader = data.getReader();
+    // const decoder = new TextDecoder();
+    // let done = false;
+
+    // let lastMessage = "";
+
+    // while (!done) {
+    //   const { value, done: doneReading } = await reader.read();
+    //   done = doneReading;
+    //   let chunkValue = decoder.decode(value);
+    //   chunkValue = chunkValue.substring(1, chunkValue.length - 1);
+    //   lastMessage = lastMessage + chunkValue;
+    //   setMessages([
+    //     { role: "assistant", content: lastMessage } as ChatGPTMessage,
+    //   ]);
+
+    //   setLoading(false);
+    // }
   };
 
   return (
@@ -303,6 +292,70 @@ export function Chat() {
       </div>
     </div>
   );
+}
+
+
+
+
+export default async function getContent(newMessages: any) {
+
+  try {
+    // const { content, sender }: Message  = req.body;
+    // For this example, let's simulate an asynchronous operation
+    const apiKey = "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"; // Replace with your OpenAI API key
+    const url = "https://api.openai.com/v1/chat/completions";
+
+
+    let API_messages = [
+      {
+        role: "system",
+        content:
+          "You are a Pediatric ER AI assistant who can answer questions about TPN calculation.\
+             Use Formaat like this -- Thank you for providing me with the necessary information. Based on the inputs you've provided, here's how I calculate Total Parenteral Nutrition (TPN): First, I calculate the patient's caloric needs using the following equation: Caloric needs = (25 x BW) + (TF x 10) Where BW is the patient's body weight in kilograms, and TF is the patient's temperature in degrees Celsius. Using the inputs provided, the patient's caloric needs are: Caloric needs = (25 x 2.5) + (100 x 10) = 625 + 1000 = 1625 calories/day Next, I calculate the patient's protein needs using the following equation: Protein needs = AA x BW Where AA is the patient's desired daily protein intake in grams per kilogram of body weight. Using the inputs provided, the patient's protein needs are: Protein needs = 2 x 2.5 = 5 g/kg/day Next, I calculate the patient's fluid needs using the following equation: Fluid needs = 100 x IL Where IL is the patient's ideal body weight in kilograms. Using the inputs provided, the patient's fluid needs are: Fluid needs = 100 x 3 = 300 ml/kg/day Finally, I calculate the patient's micronutrient needs using the following equations: Zinc needs = ZN x BW / 3.4 Copper needs = CU x BW / 0.5 Manganese needs = MN x BW / 4 Where ZN, CU, and MN are the patient's desired daily intake in micrograms per kilogram of body weight. Using the inputs provided, the patient's micronutrient needs are: Zinc needs = 400 x 2.5 / 3.4 = 294.12 micrograms per day Copper needs = 20 x 2.5 / 0.5 = 100 micrograms per day Manganese needs = 1 x 2.5 / 4 = 0.625 milligrams per day These are the basic calculations that go into calculating TPN. However, it is important to note that TPN is typically customized to each individual patient based on their specific medical needs and nutritional requirements. It is always important to consult with a qualified healthcare professional before starting TPN.\
+            You should talk about TPN calculation only",
+      },
+    ];
+
+    for (let i = 0; i < newMessages.length; i++) {
+      const message = {
+        role: newMessages[i].role,
+        content: newMessages[i].content,
+      };
+      API_messages.push(message);
+    }
+    let result;
+    try {
+      result = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: API_messages,
+        }),
+      });
+    } catch (error: any) {
+      console.error('Error:', error.message);
+      // Handle the error or throw it to be caught elsewhere
+      throw error;
+    }
+
+    console.log(result);
+
+    const data = await result.json();
+
+    console.log(result);
+
+    console.log(data.choices[0].message.content);
+
+    return (data.choices[0].message.content);
+  } catch (error) {
+
+    console.log(error);
+  }
+
 }
 
 

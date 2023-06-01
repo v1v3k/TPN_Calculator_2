@@ -19,7 +19,7 @@ export default async function handler(
     try {
       // const { content, sender }: Message  = req.body;
       // For this example, let's simulate an asynchronous operation
-      const apiKey = "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"; // Replace with your OpenAI API key
+      const apiKey = "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"; // Replace with your OpenAI API key
       const url = "https://api.openai.com/v1/chat/completions";
 
 
@@ -36,7 +36,7 @@ export default async function handler(
       for (let i = 0; i < req.body.messages.length; i++) {
         const message = {
           role: req.body.messages[i].role,
-          content: "Hi How are u",  
+          content: "Hi How are U",  
 //          content: req.body.messages[i].content,
         };
         API_messages.push(message);
