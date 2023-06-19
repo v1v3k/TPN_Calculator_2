@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
-import { Button } from "./Button";
+// import { Button } from "./Button";
 import { type ChatGPTMessage, ChatLine, LoadingChatLine } from "./ChatLine";
 import { useCookies } from "react-cookie";
 import styles from './index.module.css';;
+import { BottomSheet } from 'react-spring-bottom-sheet'
+import Button from '@mui/material/Button';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+// if setting up the CSS is tricky, you can add this to your page somewhere:
+// <link rel="stylesheet" href="https://unpkg.com/react-spring-bottom-sheet/dist/style.css" crossorigin="anonymous">
+import 'react-spring-bottom-sheet/dist/style.css'
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
 const COOKIE_NAME = "nextjs-example-ai-chat-gpt3";
 
@@ -24,7 +31,7 @@ export const initialMessages: ChatGPTMessage[] = [
 
 const InputForm = ({ states, input, setInput, sendMessage }: any) => {
 
-  states.GIR[1]( (states.dextroseUsed[0]*states.IVFluidRate[0])/(states.weight[0]*6))
+  states.GIR[1]((states.dextroseUsed[0] * states.IVFluidRate[0]) / (states.weight[0] * 6))
   /*
      const states = {
     dextroseUsed: [dextroseUsed, setDextroseUsed],
@@ -34,8 +41,29 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
   };
   */
 
+  const [open, setOpen] = useState(false)
+
   return (
     <div className={styles.center}>
+      
+      <BottomSheet open={open} onDismiss={() => setOpen(false)}>
+        Bottom Sheet
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+      </BottomSheet>
       <div className={styles.row}>
         <div className={styles.inputRequired}>
           <span className={styles.inputLabel} > Dextrose used  </span>
@@ -84,7 +112,8 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
 
       <div className={styles.row}>
         <div className={styles.input}>
-          <span className={styles.inputLabel} >GIR =</span>
+          <span className={styles.inputLabel} >GIR: <QuestionAnswerIcon onClick={() => setOpen(true)}/></span>
+          
           <input
             type="text"
             aria-label="chat input"

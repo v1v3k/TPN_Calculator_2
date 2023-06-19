@@ -15,6 +15,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.134",
     "@mui/material": "^5.13.5",
     "@vercel/analytics": "^0.1.11",
@@ -27,6 +28,7 @@
     "react-cookie": "^4.1.1",
     "react-dom": "latest",
     "react-hook-form": "^7.44.2",
+    "react-spring-bottom-sheet": "^3.4.1",
     "react-wrap-balancer": "^0.1.5",
     "vercel": "^30.0.0"
   },
