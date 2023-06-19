@@ -468,7 +468,7 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
         </div>
       </div>
 
-      Enteral feeds
+      Enteral feeds if baby getting:
       <div className={styles.row}>
 
         <div className={styles.input}>
