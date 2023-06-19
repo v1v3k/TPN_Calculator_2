@@ -553,7 +553,7 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
   );
 }
 
-export function Chat() {
+export function TPNCalc() {
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [birthWeight, setBirthWeight] = useState("");
@@ -673,7 +673,7 @@ export function Chat() {
     <div>
 
       <div className={styles.subHeader}>
-        Hi! I am a Pediatric Test Bot, which is learning to calculate TPN, Please fill the form and I will try my best to explain how I calcluate TPN
+        {/* Hi! I am a Pediatric Test Bot, which is learning to calculate TPN, Please fill the form and I will try my best to explain how I calcluate TPN */}
       </div>
 
       <div className="rounded-2xl border-zinc-100  lg:border lg:p-6">
