@@ -19,7 +19,7 @@ export default async function handler(
     try {
       // const { content, sender }: Message  = req.body;
       // For this example, let's simulate an asynchronous operation
-      const apiKey = "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"; // Replace with your OpenAI API key
+      const apiKey = ""; // Replace with your OpenAI API key
       const url = "https://api.openai.com/v1/chat/completions";
 
 

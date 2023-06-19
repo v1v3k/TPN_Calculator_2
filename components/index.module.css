@@ -23,6 +23,16 @@
   margin:15px;
 }
 
+.inputRequired{
+  background: bisque;
+  margin: 8px 0px 8px 0px;
+  display: flex;
+  flex-direction: column;
+  border-color: rgb(244 244 245 / var(--tw-border-opacity));
+  border-radius: 1rem;
+  margin:15px;
+}
+
 .inputLabel{
   padding: 8px;
 }
