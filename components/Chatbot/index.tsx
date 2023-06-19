@@ -28,6 +28,11 @@ function Chatbot() {
 
       <Text variant="h2"> NICU Calculator</Text>
 
+      <p> Ref: <a href="https://docs.google.com/spreadsheets/d/1t02VhpC59c_7Ov6_ZlEz-v6VL7FuNIBg_iJG02e72Mk/edit#gid=1977559170" style={{ color: 'blue' }}>TPN - IVF Calculator Google Sheet</a></p>
+
+
+
+
       <div className="lg:w-2/3">
 
         <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -40,8 +45,8 @@ function Chatbot() {
               </TabList>
             </Box>
             <TabPanel value="1"> <TPNCalc /></TabPanel>
-            <TabPanel value="2"><IVFCalc/></TabPanel>
-            <TabPanel value="3"><GIRCalc/></TabPanel>
+            <TabPanel value="2"><IVFCalc /></TabPanel>
+            <TabPanel value="3"><GIRCalc /></TabPanel>
           </TabContext>
         </Box>
 

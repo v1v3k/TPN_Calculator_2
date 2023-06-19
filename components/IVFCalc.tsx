@@ -237,12 +237,12 @@ export function IVFCalc() {
           setInput={setInput}
           sendMessage={sendMessage}
         />
-
+{/* 
         {messages.map(({ content, role }, index) => (
           <ChatLine key={index} role={role} content={content} />
         ))}
 
-        {loading && <LoadingChatLine />}
+        {loading && <LoadingChatLine />} */}
 
 
 

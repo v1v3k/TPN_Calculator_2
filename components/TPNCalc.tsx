@@ -684,11 +684,11 @@ export function TPNCalc() {
           sendMessage={sendMessage}
         />
 
-        {messages.map(({ content, role }, index) => (
+        {/* {messages.map(({ content, role }, index) => (
           <ChatLine key={index} role={role} content={content} />
         ))}
 
-        {loading && <LoadingChatLine />}
+        {loading && <LoadingChatLine />} */}
 
 
 
