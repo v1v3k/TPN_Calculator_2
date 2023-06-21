@@ -1,22 +1,17 @@
 import { useEffect, useState } from "react";
-// import { Button } from "./Button";
+import { Button } from "./Button";
 import { type ChatGPTMessage, ChatLine, LoadingChatLine } from "./ChatLine";
 import { useCookies } from "react-cookie";
 import styles from './index.module.css';;
 import { BottomSheet } from 'react-spring-bottom-sheet'
-import Button from '@mui/material/Button';
-import LiveHelpIcon from '@mui/icons-material/LiveHelp';
-// if setting up the CSS is tricky, you can add this to your page somewhere:
-// <link rel="stylesheet" href="https://unpkg.com/react-spring-bottom-sheet/dist/style.css" crossorigin="anonymous">
 import 'react-spring-bottom-sheet/dist/style.css'
+import ComputerIcon from '@mui/icons-material/Computer';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import React, { memo } from 'react';
+import { AIExplainWindow, getContent } from "./AIExplainWindow";
 
-const COOKIE_NAME = "nextjs-example-ai-chat-gpt3";
+const COOKIE_NAME = "nextjs-nicu-calculator-ai-chat-gpt3";
 
-type Message = {
-  content: string;
-  sender: string;
-};
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages: ChatGPTMessage[] = [
@@ -27,43 +22,97 @@ export const initialMessages: ChatGPTMessage[] = [
   },
 ];
 
+const InputForm = ({ states, stateVals, input, setInput, sendMessage }: any) => {
 
-
-const InputForm = ({ states, input, setInput, sendMessage }: any) => {
-
+  // Calculations
   states.GIR[1]((states.dextroseUsed[0] * states.IVFluidRate[0]) / (states.weight[0] * 6))
-  /*
-     const states = {
-    dextroseUsed: [dextroseUsed, setDextroseUsed],
-    IVFluidRate: [IVFluidRate, setIVFluidRate],
-    weight: [weight, setWeight],
-    GIR: [GIR, setGIR],
-  };
-  */
 
-  const [open, setOpen] = useState(false)
+  const [girDisplay, setGirDisplay] = useState(false);
+  const [explainContent, setExplain] = useState("");
+
+  const onClickGIR = () => {
+    if (girDisplay) {
+      setGirDisplay(false)
+    } else {
+      setGirDisplay(true)
+      setExplain("Loading GPT Answer Composition...");
+      const content = JSON.stringify(stateVals);
+      debugger;
+      let info:any = {
+        weight: stateVals.weight[0],
+        dextroseUsed: stateVals.dextroseUsed[0],
+        IVFluidRate: stateVals.IVFluidRate[0],
+        "Answer for GIR is:":stateVals.GIR[0]
+      }
+      let solution: any= { "Answer for GIR is:":stateVals.GIR[0]}
+      info = JSON.stringify(info);
+      solution = JSON.stringify(solution);
+
+      const prompt = `   
+      User:
+      - Dextrose Used = 21
+      - IV Fluid Rate  = 2
+      - Weight = 23
+
+      ***Solution = 0.30434782608695654***
+      
+      System:
+      Step 1: Formula for GIR = (Dextrose used * IV fluid rate) / (Weight (kg) * 6)
+
+      Step 2: Values 
+      - Dextrose Used = 21
+      - IV Fluid Rate  = 2
+      - Weight = 23
+
+      Step 3: Substituion and Result
+      GIR = (Dextrose used * IV fluid rate) / (Weight (kg) * 6)
+      GIR = (21 * 2) / (23 * 6)
+      GIR = 0.30434782608695654
+
+      User:
+      - Dextrose Used = 21
+      - IV Fluid Rate  = 2
+      - Weight = 23
+
+      ***Solution = 0.30434782608695654***
+      
+      System:
+      Step 1: Formula for GIR = (Dextrose used * IV fluid rate) / (Weight (kg) * 6)
+
+      Step 2: Values 
+      - Dextrose Used = 2
+      - IV Fluid Rate  = 30
+      - Weight = 3.1
+
+      Step 3: Substituion and Result
+      GIR = (Dextrose used * IV fluid rate) / (Weight (kg) * 6)
+      GIR = (2 * 30) / (3.1 * 6)
+      GIR = 3.225806451612903
+
+      User:
+      - Dextrose Used = `+stateVals.dextroseUsed[0]+`
+      - IV Fluid Rate  = `+stateVals.IVFluidRate[0]+`
+      - Weight = `+stateVals.weight[0]+`
+
+      ***Solution =  `+stateVals.GIR[0]+`***
+`;
+      const newMessages = [
+        {
+          role: "system", content: prompt
+        } as ChatGPTMessage,
+      ];
+
+      getContent(newMessages).then(result => {
+        debugger;
+        result = result.replace(/\n/g, '<br>')
+        setExplain(result)
+        console.log(result); // Handle the result of the asynchronous task
+      });
+    }
+  }
 
   return (
     <div className={styles.center}>
-      
-      <BottomSheet open={open} onDismiss={() => setOpen(false)}>
-        Bottom Sheet
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-
-      </BottomSheet>
       <div className={styles.row}>
         <div className={styles.inputRequired}>
           <span className={styles.inputLabel} > Dextrose used  </span>
@@ -112,8 +161,8 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
 
       <div className={styles.row}>
         <div className={styles.input}>
-          <span className={styles.inputLabel} >GIR: <QuestionAnswerIcon onClick={() => setOpen(true)}/></span>
-          
+          <span className={styles.inputLabel} >GIR:  </span>
+
           <input
             type="text"
             aria-label="chat input"
@@ -122,19 +171,26 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
             value={states.GIR[0]}
 
           />
+          <br />
+          <Button onClick={onClickGIR} >GPT Answer Composition<ComputerIcon /><QuestionAnswerIcon /></Button>
+          <br />
+          <AIExplainWindow shouldDisplay={girDisplay} explainContent={explainContent} />
+
         </div>
       </div>
     </div>
   );
 }
 
+
+
+
 export function GIRCalc() {
-  const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
   const [input, setInput] = useState("");
-  const [dextroseUsed, setDextroseUsed] = useState(0);
-  const [IVFluidRate, setIVFluidRate] = useState(0);
-  const [weight, setWeight] = useState(0);
-  const [GIR, setGIR] = useState(0);
+  const [dextroseUsed, setDextroseUsed] = useState();
+  const [IVFluidRate, setIVFluidRate] = useState();
+  const [weight, setWeight] = useState();
+  const [GIR, setGIR] = useState();
 
   const states = {
     dextroseUsed: [dextroseUsed, setDextroseUsed],
@@ -143,7 +199,13 @@ export function GIRCalc() {
     GIR: [GIR, setGIR],
   };
 
-  const [loading, setLoading] = useState(false);
+  const stateVals = {
+    dextroseUsed: [dextroseUsed,],
+    IVFluidRate: [IVFluidRate,],
+    weight: [weight,],
+    GIR: [GIR,],
+  };
+
   const [cookie, setCookie] = useCookies([COOKIE_NAME]);
 
   useEffect(() => {
@@ -154,69 +216,22 @@ export function GIRCalc() {
     }
   }, [cookie, setCookie]);
 
-  // send message to API /api/chat endpoint
-  const sendMessage = async (message: string) => {
-    setLoading(true);
-    const newMessages = [
-      { role: "user", content: message } as ChatGPTMessage,
-    ];
-    setMessages([]);
-
-    getContent(newMessages).then(result => {
-      debugger;
-      console.log(result); // Handle the result of the asynchronous task
-      setMessages([
-        { role: "assistant", content: result } as ChatGPTMessage,
-      ]);
-      setLoading(false);
-    });;
-
-
-
-
-    // const reader = data.getReader();
-    // const decoder = new TextDecoder();
-    // let done = false;
-
-    // let lastMessage = "";
-
-    // while (!done) {
-    //   const { value, done: doneReading } = await reader.read();
-    //   done = doneReading;
-    //   let chunkValue = decoder.decode(value);
-    //   chunkValue = chunkValue.substring(1, chunkValue.length - 1);
-    //   lastMessage = lastMessage + chunkValue;
-    //   setMessages([
-    //     { role: "assistant", content: lastMessage } as ChatGPTMessage,
-    //   ]);
-
-    //   setLoading(false);
-    // }
-  };
 
   return (
     <div>
-
       <div className={styles.subHeader}>
-        {/* Hi! I am a Pediatric Test Bot, which is learning to calculate TPN, Please fill the form and I will try my best to explain how I calcluate TPN */}
+        To get results please <strong>fill out the orange colored fields</strong>
+        <br />
+        If results shown as <strong>NaN</strong> required input fields not provided
       </div>
 
       <div className="rounded-2xl border-zinc-100  lg:border lg:p-6">
         <InputForm
           states={states}
+          stateVals={stateVals}
           input={input}
           setInput={setInput}
-          sendMessage={sendMessage}
         />
-
-        {/* {messages.map(({ content, role }, index) => (
-          <ChatLine key={index} role={role} content={content} />
-        ))}
-
-        {loading && <LoadingChatLine />} */}
-
-
-
       </div>
     </div>
   );
@@ -224,80 +239,3 @@ export function GIRCalc() {
 
 
 
-
-export default async function getContent(newMessages: any) {
-
-  try {
-    // const { content, sender }: Message  = req.body;
-    // For this example, let's simulate an asynchronous operation
-
-    const apiKey = ""; // Replace with your OpenAI API key
-    const url = "https://api.openai.com/v1/chat/completions";
-
-
-    let API_messages = [
-      {
-        role: "system",
-        content:
-          "You are a Pediatric ER AI assistant who can answer questions about TPN calculation.\
-             Use Formaat like this -- Thank you for providing me with the necessary information. Based on the inputs you've provided, here's how I calculate Total Parenteral Nutrition (TPN): First, I calculate the patient's caloric needs using the following equation: Caloric needs = (25 x BW) + (TF x 10) Where BW is the patient's body weight in kilograms, and TF is the patient's temperature in degrees Celsius. Using the inputs provided, the patient's caloric needs are: Caloric needs = (25 x 2.5) + (100 x 10) = 625 + 1000 = 1625 calories/day Next, I calculate the patient's protein needs using the following equation: Protein needs = AA x BW Where AA is the patient's desired daily protein intake in grams per kilogram of body weight. Using the inputs provided, the patient's protein needs are: Protein needs = 2 x 2.5 = 5 g/kg/day Next, I calculate the patient's fluid needs using the following equation: Fluid needs = 100 x IL Where IL is the patient's ideal body weight in kilograms. Using the inputs provided, the patient's fluid needs are: Fluid needs = 100 x 3 = 300 ml/kg/day Finally, I calculate the patient's micronutrient needs using the following equations: Zinc needs = ZN x BW / 3.4 Copper needs = CU x BW / 0.5 Manganese needs = MN x BW / 4 Where ZN, CU, and MN are the patient's desired daily intake in micrograms per kilogram of body weight. Using the inputs provided, the patient's micronutrient needs are: Zinc needs = 400 x 2.5 / 3.4 = 294.12 micrograms per day Copper needs = 20 x 2.5 / 0.5 = 100 micrograms per day Manganese needs = 1 x 2.5 / 4 = 0.625 milligrams per day These are the basic calculations that go into calculating TPN. However, it is important to note that TPN is typically customized to each individual patient based on their specific medical needs and nutritional requirements. It is always important to consult with a qualified healthcare professional before starting TPN.\
-            You should talk about TPN calculation only",
-      },
-    ];
-
-    for (let i = 0; i < newMessages.length; i++) {
-      const message = {
-        role: newMessages[i].role,
-        content: newMessages[i].content,
-      };
-      API_messages.push(message);
-    }
-    let result;
-    try {
-      result = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer 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",
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: API_messages,
-        }),
-      });
-    } catch (error: any) {
-      console.error('Error:', error.message);
-      // Handle the error or throw it to be caught elsewhere
-      throw error;
-    }
-
-    console.log(result);
-
-    const data = await result.json();
-
-    console.log(result);
-
-    console.log(data.choices[0].message.content);
-
-    return (data.choices[0].message.content);
-  } catch (error) {
-
-    console.log(error);
-  }
-
-}
-
-
-/*
-calculate TPN for BW 2 kg
-TF 100 cc/kg/day
-NPO
-
-D10 (2.2.300)
-AA 2 g/kg/day
-IL 3 g/kg/day.
-
-Zn = 400 mcg/kg/day
-Cu = 20 mcg/kg/day
-Mn = 1 mcg/kg/day
-*/

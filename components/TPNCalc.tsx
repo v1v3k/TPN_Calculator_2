@@ -23,38 +23,38 @@ export const initialMessages: ChatGPTMessage[] = [
 
 
 const InputForm = ({ states, input, setInput, sendMessage }: any) => {
- 
-  states.ilVolume[1]( Math.abs(states.il[0]*states.birthWeight[0]*5).toFixed(2))
-  states.tpnVolume[1](states.birthWeight[0]*states.tfRatio[0] - states.po[0] - states.ilVolume[0]); // 7
-  states.ilRate[1](states.ilVolume[0]/20)
-  states.magSulfate[1](states.birthWeight[0]/4)
-  // (C21/2)*0.75
-  const c21 = ((states.calcium[0]*states.birthWeight[0])/200)
-  const c25 = states.totalSodium[0]*states.birthWeight[0]
-  states.sodiumPhosphate[1]((c21/2)*0.75)
-  states.sodiumChloride[1](c25-c21/2)
-  // C25-C21/2
-  states.potassiumChloride[1](states.birthWeight[0]*states.totalPotassium[0])
-  states.zn[1](400*states.birthWeight[0])
-  states.cu[1](20*states.birthWeight[0])
-  states.mn[1](1*states.birthWeight[0])
-  states.heparin[1](states.tpnVolume[0]/2)
 
-  states.gluc[1]((states.tpnVolume[0]/10)*3.4)
+  states.ilVolume[1](Math.abs(states.il[0] * states.birthWeight[0] * 5).toFixed(2))
+  states.tpnVolume[1](states.birthWeight[0] * states.tfRatio[0] - states.po[0] - states.ilVolume[0]); // 7
+  states.ilRate[1](states.ilVolume[0] / 20)
+  states.magSulfate[1](states.birthWeight[0] / 4)
+  // (C21/2)*0.75
+  const c21 = ((states.calcium[0] * states.birthWeight[0]) / 200)
+  const c25 = states.totalSodium[0] * states.birthWeight[0]
+  states.sodiumPhosphate[1]((c21 / 2) * 0.75)
+  states.sodiumChloride[1](c25 - c21 / 2)
+  // C25-C21/2
+  states.potassiumChloride[1](states.birthWeight[0] * states.totalPotassium[0])
+  states.zn[1](400 * states.birthWeight[0])
+  states.cu[1](20 * states.birthWeight[0])
+  states.mn[1](1 * states.birthWeight[0])
+  states.heparin[1](states.tpnVolume[0] / 2)
+
+  states.gluc[1]((states.tpnVolume[0] / 10) * 3.4)
 
   const c13 = states.birthWeight[0] * states.aa[0]
-  states.ptn[1](c13*4);
+  states.ptn[1](c13 * 4);
   // B15*B2*9
-  states.ILResult[1](states.birthWeight[0]*states.il[0]*9)
-  states.total[1](states.gluc[0]+states.ptn[0]+states.ILResult[0])
+  states.ILResult[1](states.birthWeight[0] * states.il[0] * 9)
+  states.total[1](states.gluc[0] + states.ptn[0] + states.ILResult[0])
 
 
   states.po[0]
-  states.birthWeight[0] 
+  states.birthWeight[0]
 
-  states.Kcal_19[1](((states.po[0]*19)/30)/states.birthWeight[0] )
-  states.Kcal_22[1](((states.po[0]*22)/30)/states.birthWeight[0] )
-  states.Kcal_24[1](((states.po[0]*24)/30)/states.birthWeight[0] )
+  states.Kcal_19[1](((states.po[0] * 19) / 30) / states.birthWeight[0])
+  states.Kcal_22[1](((states.po[0] * 22) / 30) / states.birthWeight[0])
+  states.Kcal_24[1](((states.po[0] * 24) / 30) / states.birthWeight[0])
 
 
   return (
@@ -90,40 +90,6 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
           />
         </div>
 
-        <div className={styles.input}>
-          <span className={styles.inputLabel} >Total TPN volume infused in 24 hours</span>
-          <input
-            type="text"
-            aria-label="chat input"
-            required
-            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
-            value={states.tpnVolume[0]}
-
-            onChange={(e) => {
-              
-            }}
-          />
-        </div>
-
-
-        <div className={styles.input}>
-          <span className={styles.inputLabel} >TPN fluid rate </span>
-          <input
-            type="text"
-            aria-label="chat input"
-            required
-            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
-            value={(states.tpnVolume[0])/24}
-
-            // onChange={(e) => {
-            //   //states.tpnFluidRate[1](states.tpnVolume[0]/24);
-            // }}
-          />
-        </div>
-
-      </div>
-
-      <div className={styles.row}>
 
         <div className={styles.inputRequired}>
           <span className={styles.inputLabel} >PO (cc /day)</span>
@@ -172,6 +138,91 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
           />
         </div>
 
+
+      </div>
+
+      <div className={styles.row}>
+
+
+        <div className={styles.inputRequired}>
+          <span className={styles.inputLabel} >Calcium (mg/kg/day) </span>
+          <input
+            type="text"
+            aria-label="chat input"
+            required
+            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
+            value={states.calcium[0]}
+
+            onChange={(e) => {
+              states.calcium[1](e.target.value);
+            }}
+          />
+        </div>
+
+        <div className={styles.inputRequired}>
+          <span className={styles.inputLabel} >Total sodium (meq/kg/day)</span>
+          <input
+            type="text"
+            aria-label="chat input"
+            required
+            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
+            value={states.totalSodium[0]}
+
+            onChange={(e) => {
+              states.totalSodium[1](e.target.value);
+            }}
+          />
+        </div>
+
+        <div className={styles.inputRequired}>
+          <span className={styles.inputLabel} >Total Potassium (meq/kg/day)</span>
+          <input
+            type="text"
+            aria-label="chat input"
+            required
+            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
+            value={states.totalPotassium[0]}
+
+            onChange={(e) => {
+              states.totalPotassium[1](e.target.value);
+            }}
+          />
+        </div>
+
+      </div>
+
+      <div className={styles.row}>
+
+      <div className={styles.input}>
+          <span className={styles.inputLabel} >Total TPN volume infused in 24 hours</span>
+          <input
+            type="text"
+            aria-label="chat input"
+            required
+            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
+            value={states.tpnVolume[0]}
+
+            onChange={(e) => {
+
+            }}
+          />
+        </div>
+
+        <div className={styles.input}>
+          <span className={styles.inputLabel} >TPN fluid rate </span>
+          <input
+            type="text"
+            aria-label="chat input"
+            required
+            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
+            value={(states.tpnVolume[0]) / 24}
+
+          // onChange={(e) => {
+          //   //states.tpnFluidRate[1](states.tpnVolume[0]/24);
+          // }}
+          />
+        </div>
+
         <div className={styles.input}>
           <span className={styles.inputLabel} >IL volume </span>
           <input
@@ -186,9 +237,7 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
             }}
           />
         </div>
-      </div>
 
-      <div className={styles.row}>
         <div className={styles.input}>
           <span className={styles.inputLabel} >IL rate over 20 hours is</span>
           <input
@@ -200,21 +249,6 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
 
             onChange={(e) => {
               states.ilRate[1](e.target.value);
-            }}
-          />
-        </div>
-
-        <div className={styles.inputRequired}>
-          <span className={styles.inputLabel} >Calcium (mg/kg/day) </span>
-          <input
-            type="text"
-            aria-label="chat input"
-            required
-            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
-            value={states.calcium[0]}
-
-            onChange={(e) => {
-              states.calcium[1](e.target.value);
             }}
           />
         </div>
@@ -236,20 +270,14 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
       </div>
 
       <div className={styles.row}>
-        <div className={styles.inputRequired}>
-          <span className={styles.inputLabel} >Total sodium (meq/kg/day)</span>
-          <input
-            type="text"
-            aria-label="chat input"
-            required
-            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
-            value={states.totalSodium[0]}
 
-            onChange={(e) => {
-              states.totalSodium[1](e.target.value);
-            }}
-          />
-        </div>
+
+
+
+
+
+
+
 
         <div className={styles.input}>
           <span className={styles.inputLabel} >Sodium Phosphate</span>
@@ -285,20 +313,7 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
 
       <div className={styles.row}>
 
-        <div className={styles.inputRequired}>
-          <span className={styles.inputLabel} >Total Potassium (meq/kg/day)</span>
-          <input
-            type="text"
-            aria-label="chat input"
-            required
-            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
-            value={states.totalPotassium[0]}
 
-            onChange={(e) => {
-              states.totalPotassium[1](e.target.value);
-            }}
-          />
-        </div>
 
         <div className={styles.input}>
           <span className={styles.inputLabel} >Potassium Cholride/Acetate</span>
@@ -556,36 +571,36 @@ const InputForm = ({ states, input, setInput, sendMessage }: any) => {
 export function TPNCalc() {
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
   const [input, setInput] = useState("");
-  const [birthWeight, setBirthWeight] = useState("");
-  const [tfRatio, setTfRatio] = useState("");
-  const [tpnVolume, setTpnVolume] = useState("");
-  const [tpnFluidRate, setTpnFluidRate] = useState("");
-  const [po, setPo] = useState("");
-  const [aa, setAa] = useState("");
-  const [il, setIl] = useState("");
-  const [ilVolume, setIlVolume] = useState("");
-  const [ilRate, setIlRate] = useState("");
-  const [calcium, setCalcium] = useState("");
-  const [magSulfate, setMagSulfate] = useState("");
-  const [totalSodium, setTotalSodium] = useState("");
-  const [sodiumPhosphate, setSodiumPhosphate] = useState("");
-  const [sodiumChloride, setSodiumChloride] = useState("");
-  const [totalPotassium, setTotalPotassium] = useState("");
-  const [potassiumChloride, setPotassiumChloride] = useState("");
+  const [birthWeight, setBirthWeight] = useState();
+  const [tfRatio, setTfRatio] = useState();
+  const [tpnVolume, setTpnVolume] = useState();
+  const [tpnFluidRate, setTpnFluidRate] = useState();
+  const [po, setPo] = useState();
+  const [aa, setAa] = useState();
+  const [il, setIl] = useState();
+  const [ilVolume, setIlVolume] = useState();
+  const [ilRate, setIlRate] = useState();
+  const [calcium, setCalcium] = useState();
+  const [magSulfate, setMagSulfate] = useState();
+  const [totalSodium, setTotalSodium] = useState();
+  const [sodiumPhosphate, setSodiumPhosphate] = useState();
+  const [sodiumChloride, setSodiumChloride] = useState();
+  const [totalPotassium, setTotalPotassium] = useState();
+  const [potassiumChloride, setPotassiumChloride] = useState();
   const [mci, setMci] = useState(3.25);
-  const [zn, setZn] = useState("");
-  const [cu, setCu] = useState("");
-  const [mn, setMn] = useState("");
-  const [heparin, setHeparin] = useState("");
+  const [zn, setZn] = useState();
+  const [cu, setCu] = useState();
+  const [mn, setMn] = useState();
+  const [heparin, setHeparin] = useState();
 
-  const [gluc, setGluc] = useState("");
-  const [ptn, setPtn] = useState("");
-  const [ILResult, setILResult] = useState("");
-  const [total, setTotal] = useState("");
+  const [gluc, setGluc] = useState();
+  const [ptn, setPtn] = useState();
+  const [ILResult, setILResult] = useState();
+  const [total, setTotal] = useState();
 
-  const [Kcal_19, setKcal_19] = useState("");
-  const [Kcal_22, setKcal_22] = useState("");
-  const [Kcal_24, setKcal_24] = useState("");
+  const [Kcal_19, setKcal_19] = useState();
+  const [Kcal_22, setKcal_22] = useState();
+  const [Kcal_24, setKcal_24] = useState();
 
   const states = {
     birthWeight: [birthWeight, setBirthWeight],
@@ -673,7 +688,9 @@ export function TPNCalc() {
     <div>
 
       <div className={styles.subHeader}>
-        {/* Hi! I am a Pediatric Test Bot, which is learning to calculate TPN, Please fill the form and I will try my best to explain how I calcluate TPN */}
+        To get results please <strong>fill out the orange colored fields</strong>
+        <br />
+        If results shown as <strong>NaN</strong> required input fields not provided
       </div>
 
       <div className="rounded-2xl border-zinc-100  lg:border lg:p-6">
