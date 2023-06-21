@@ -9,38 +9,50 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
+
+  /* Media query for desktop */
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
 }
 
 
-.input{
+.input {
   margin: 8px 0px 8px 0px;
   display: flex;
   flex-direction: column;
   border-color: rgb(244 244 245 / var(--tw-border-opacity));
   border-radius: 1rem;
-  margin:15px;
+  margin: 15px;
 }
 
-.inputRequired{
+.inputSolutionHighlight {
+  border-radius: 1rem;
+  background-color: lavender;
+  margin: 7px;
+}
+
+.inputRequired {
   background: bisque;
   margin: 8px 0px 8px 0px;
   display: flex;
   flex-direction: column;
   border-color: rgb(244 244 245 / var(--tw-border-opacity));
   border-radius: 1rem;
-  margin:15px;
+  margin: 15px;
 }
 
-.inputLabel{
+.inputLabel {
   padding: 8px;
 }
 
-.input-container{
+.input-container {
   padding: 2px;
 }
 
-.subHeader{
+.subHeader {
   margin: 16px;
 }
