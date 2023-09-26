@@ -35,6 +35,9 @@ export const AIIcon = (props: any) => {
 
 
 export async function getContent(newMessages: any) {
+    const openAIKey = process.env.NEXT_PUBLIC_OPEN_AI_KEY;
+    console.log(openAIKey)
+
     try {
         const url = "https://api.openai.com/v1/chat/completions";
 
@@ -55,7 +58,7 @@ export async function getContent(newMessages: any) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: "Bearer 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",
+                    Authorization: "Bearer "+openAIKey,
                 },
                 body: JSON.stringify({
                     model: "gpt-3.5-turbo",
