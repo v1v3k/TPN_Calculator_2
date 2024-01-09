@@ -68,8 +68,7 @@ export async function getContent(newMessages: any) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "Bearer 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",
+          Authorization: "Bearer ",
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
