@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm turbo build",
+  "buildCommand": "npm run build",
   "ignoreCommand": "pnpm dlx turbo-ignore",
   "headers": [
     {
