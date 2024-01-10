@@ -9,13 +9,9 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  flex-direction: column;
-  flex-wrap: wrap;
 
   /* Media query for desktop */
-  @media (min-width: 768px) {
     flex-direction: row;
-  }
 
 }
 

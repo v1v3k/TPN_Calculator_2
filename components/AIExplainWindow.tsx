@@ -47,6 +47,7 @@ export const AIIcon = (props: any) => {
 
 export async function getContent(newMessages: any) {
   try {
+    // Replace with lambda URL
     const url = "https://api.openai.com/v1/chat/completions";
 
     let API_messages = [];
