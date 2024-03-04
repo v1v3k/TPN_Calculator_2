@@ -25,6 +25,16 @@
   margin: 15px;
 }
 
+.inputPercentage {
+  margin: 8px 0px 8px 0px;
+  display: flex;
+  flex-direction: column;
+  border-color: rgb(244 244 245 / var(--tw-border-opacity));
+  border-radius: 1rem;
+  margin: 15px;
+  width:100px;
+}
+
 .inputSolutionHighlight {
   border-radius: 1rem;
   background-color: lavender;

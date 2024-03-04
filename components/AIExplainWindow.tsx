@@ -46,47 +46,48 @@ export const AIIcon = (props: any) => {
 };
 
 export async function getContent(newMessages: any) {
-  try {
-    // Replace with lambda URL
-    const url = "https://api.openai.com/v1/chat/completions";
+  // try {
+  // Replace with lambda URL
+  // console.log(newMessages);
+  // const url = "https://api.openai.com/v1/chat/completions";
 
-    let API_messages = [];
+  // let API_messages = [];
 
-    for (let i = 0; i < newMessages.length; i++) {
-      const message = {
-        role: newMessages[i].role,
-        content: newMessages[i].content,
-      };
-      API_messages.push(message);
-    }
+  // for (let i = 0; i < newMessages.length; i++) {
+  //   const message = {
+  //     role: newMessages[i].role,
+  //     content: newMessages[i].content,
+  //   };
+  //   API_messages.push(message);
+  // }
 
-    let result;
+  console.log(newMessages);
+  return newMessages[0].content;
+  //   try {
+  //     debugger;
+  //     // Key Placed here
+  //     result = await fetch(url, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer ",
+  //       },
+  //       body: JSON.stringify({
+  //         model: "gpt-3.5-turbo",
+  //         messages: API_messages,
+  //       }),
+  //     });
+  //   } catch (error: any) {
+  //     console.error("Error:", error.message);
+  //     // Handle the error or throw it to be caught elsewhere
+  //     throw error;
+  //   }
+  //   const data = await result.json();
 
-    try {
-      debugger;
-      // Key Placed here
-      result = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer ",
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: API_messages,
-        }),
-      });
-    } catch (error: any) {
-      console.error("Error:", error.message);
-      // Handle the error or throw it to be caught elsewhere
-      throw error;
-    }
-    const data = await result.json();
+  //   console.log(data.choices[0].message.content);
 
-    console.log(data.choices[0].message.content);
-
-    return data.choices[0].message.content;
-  } catch (error) {
-    console.log(error);
-  }
+  //   return data.choices[0].message.content;
+  // } catch (error) {
+  //   console.log(error);
+  // }
 }
